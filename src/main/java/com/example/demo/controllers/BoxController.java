@@ -29,7 +29,6 @@ public class BoxController {
   @PostMapping(value = "/box/{boxId}")
   public Box updateBox(@PathVariable("boxId") Integer boxId) {
     Box box = new Box();
-    box.setId(boxId);
     return box;
   }
 
