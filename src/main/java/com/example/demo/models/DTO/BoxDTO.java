@@ -1,13 +1,23 @@
 package com.example.demo.models.DTO;
 
+import io.micrometer.common.lang.NonNullApi;
+import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.ToString;
 
-
+@Builder
 @Getter
 @Setter
-@Data
+@AllArgsConstructor(access = AccessLevel.PRIVATE)
+@NoArgsConstructor
+@ToString
+@EqualsAndHashCode
 public class BoxDTO {
   private Integer id;
   private String nom;

@@ -13,7 +13,6 @@ public class BoxController {
   @GetMapping(value = "/box/{boxId}")
   public Box getBox(@PathVariable("boxId") Integer boxId) {
     Box box = new Box();
-    box.setId(boxId);
     return box;
   }
 
