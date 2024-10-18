@@ -8,7 +8,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @Data
-public class BoxCreationDTO {
+public class BoxDTO {
   private Integer id;
   private String nom;
   private Integer quantite;
