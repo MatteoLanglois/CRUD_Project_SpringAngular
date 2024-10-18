@@ -21,6 +21,11 @@ public class BoxController {
   @GetMapping(value = "/boxes")
   public ArrayList<BoxDTO> getAll() {
     ArrayList<BoxDTO> boxes = new ArrayList<>();
+    boxes.add(new BoxDTO());
+    boxes.add(new BoxDTO());
+    boxes.add(new BoxDTO());
+    boxes.add(new BoxDTO());
+    boxes.add(new BoxDTO());
     return boxes;
   }
 
