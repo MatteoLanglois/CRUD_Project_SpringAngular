@@ -1,10 +1,7 @@
 package com.example.demo.services;
 
 import com.example.demo.models.Box;
-import com.example.demo.models.DTO.BoxDTO;
-import com.example.demo.models.Mapper.BoxMapper;
 import com.example.demo.repository.BoxRepository;
-import java.util.ArrayList;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -16,26 +13,26 @@ public class BoxService {
   private BoxRepository repository;
 
   @Transactional
-  public BoxDTO create(Box box) {
-    return BoxMapper.INSTANCE.toDTO(repository.save(box));
+  public Box create(Box box) {
+    return repository.save(box);
   }
 
-  public BoxDTO findById(int id) {
-    return repository.findById(id).map(BoxMapper.INSTANCE::toDTO).orElse(null);
+  public Box getById(int id) {
+    return repository.findById(id).orElse(null);
   }
 
-  public List<BoxDTO> findAll() {
-    List<Box> list = repository.findAll();
-    List<BoxDTO> listDTO = new ArrayList<>();
-    for (Box box : list) {
-      listDTO.add(BoxMapper.INSTANCE.toDTO(box));
-    }
-    return listDTO;
+  public List<Box> getAll() {
+    return repository.findAll();
   }
 
   @Transactional
-  public BoxDTO update(Box box) {
-    return BoxMapper.INSTANCE.toDTO(repository.save(box));
+  public Box update(Box box, int id) {
+    Box existingBox = repository.findById(id).orElseThrow(() -> new RuntimeException("Box not found"));
+    existingBox.setNom(box.getNom());
+    existingBox.setDescription(box.getDescription());
+    existingBox.setQuantite(box.getQuantite());
+    existingBox.setPoint_geo(existingBox.getPoint_geo());
+    return repository.save(existingBox);
   }
 
   @Transactional
