@@ -12,9 +12,9 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor(access = AccessLevel.PUBLIC)
 @NoArgsConstructor
 public class ReservationId {
-  @Column(name = "id_user", nullable = false)
+  @Column(name = "utilisateur_id", nullable = false)
   private int id_user;
 
-  @Column(name = "id_box", nullable = false)
+  @Column(name = "boite_id", nullable = false)
   private int id_box;
 }
