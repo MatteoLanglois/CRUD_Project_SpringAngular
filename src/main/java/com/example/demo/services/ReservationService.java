@@ -1,5 +1,6 @@
 package com.example.demo.services;
 
+import com.example.demo.exceptions.reservation.ReservationNotFoundException;
 import com.example.demo.models.Reservation;
 import com.example.demo.models.ReservationId;
 import com.example.demo.repository.ReservationRepository;
@@ -16,7 +17,7 @@ public class ReservationService {
 
     public Reservation getById(ReservationId reservationId) {
         Optional<Reservation> reservation = reservationRepository.findById(reservationId);
-        return reservation.orElse(null);
+        return reservation.orElseThrow(ReservationNotFoundException::new);
     }
 
     public List<Reservation> getAll() {
