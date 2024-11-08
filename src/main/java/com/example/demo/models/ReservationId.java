@@ -1,7 +1,8 @@
 package com.example.demo.models;
 
-import jakarta.persistence.Column;
 import jakarta.persistence.Embeddable;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
@@ -12,9 +13,11 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor(access = AccessLevel.PUBLIC)
 @NoArgsConstructor
 public class ReservationId {
-  @Column(name = "utilisateur_id", nullable = false)
-  private int id_user;
+  @ManyToOne
+  @JoinColumn(name = "utilisateur_id", nullable = false)
+  private User user;
 
-  @Column(name = "boite_id", nullable = false)
-  private int id_box;
+  @ManyToOne
+  @JoinColumn(name = "boite_id", nullable = false)
+  private Box box;
 }
