@@ -19,18 +19,17 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/boxes")
 public class BoxController {
 
     @Autowired
     private BoxService boxService;
 
-    @GetMapping("/{boxId}")
+    @GetMapping("/boxes/{boxId}")
     public BoxDTO getBox(@PathVariable("boxId") Integer boxId) {
         return BoxMapper.INSTANCE.toDTO(boxService.getById(boxId));
     }
 
-    @GetMapping
+    @GetMapping("/boxes")
     public List<BoxDTO> getAll() {
       List<Box> boxes = boxService.getAll();
       ArrayList<BoxDTO> boxesDTO = new ArrayList<>();
@@ -40,7 +39,7 @@ public class BoxController {
       return boxesDTO;
     }
 
-    @PostMapping
+    @PostMapping("/boxes")
     public ResponseEntity<BoxDTO> addBox(@RequestBody Box box) {
         try {
             return ResponseEntity.ok(BoxMapper.INSTANCE.toDTO(boxService.create(box)));
@@ -49,12 +48,12 @@ public class BoxController {
         }
     }
 
-    @PutMapping("/{boxId}")
+    @PutMapping("/boxes/{boxId}")
     public BoxDTO updateBox(@PathVariable("boxId") Integer boxId, @RequestBody Box box) {
         return BoxMapper.INSTANCE.toDTO(boxService.update(box, boxId));
     }
 
-    @DeleteMapping("/{boxId}")
+    @DeleteMapping("/boxes/{boxId}")
     public void deleteBox(@PathVariable("boxId") Integer boxId) {
         boxService.delete(boxId);
     }

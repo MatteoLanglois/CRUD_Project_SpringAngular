@@ -25,9 +25,9 @@ public class ReservationController {
   @Autowired
   private ReservationMapper ReservationMapper;
 
-  @GetMapping(value = "/reservation/{reservationId}")
-  public ReservationDTO getReservation(@PathVariable("reservationId") ReservationId reservationId) {
-    return ReservationMapper.toDTO(reservationService.getById(reservationId));
+  @GetMapping(value = "/reservations/boxes/{boxId}/users/{userId}")
+  public ReservationDTO getReservation(@PathVariable("boxId") Integer boxId, @PathVariable("userId") Integer userId) {
+    return ReservationMapper.toDTO(reservationService.getById(new ReservationId(userId, boxId)));
   }
 
   @GetMapping(value = "/reservations")
@@ -39,7 +39,7 @@ public class ReservationController {
     return reservationsDTO;
   }
 
-  @PostMapping(value = "/reservation")
+  @PostMapping(value = "/reservations")
   public ResponseEntity<ReservationDTO> addReservation(@RequestBody Reservation reservation) {
     try {
       return ResponseEntity.ok(ReservationMapper.toDTO(reservationService.create(reservation)));
@@ -48,14 +48,17 @@ public class ReservationController {
     }
   }
 
-  @PutMapping(value = "/reservation/{reservationId}")
-  public ReservationDTO updateReservation(@PathVariable("reservationId") ReservationId reservationId,
+  @PutMapping(value = "/reservations/boxes/{boxId}/users/{userId}")
+  public ReservationDTO updateReservation(@PathVariable("boxId") Integer boxId,
+                                          @PathVariable("userId") Integer userId,
                                           @RequestBody Reservation reservation) {
-      return ReservationMapper.toDTO(reservationService.update(reservation, reservationId));
+      return ReservationMapper.toDTO(reservationService.update(reservation,
+          new ReservationId(userId, boxId)));
   }
 
-  @DeleteMapping(value = "/reservation/{reservationId}")
-  public void deleteReservation(@PathVariable("reservationId") ReservationId reservationId) {
-      reservationService.delete(reservationId);
+  @DeleteMapping(value = "/reservations/boxes/{boxId}/users/{userId}")
+  public void deleteReservation(@PathVariable("boxId") Integer boxId,
+                                @PathVariable("userId") Integer userId) {
+      reservationService.delete(new ReservationId(userId, boxId));
   }
 }
