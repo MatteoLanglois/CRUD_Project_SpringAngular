@@ -1,6 +1,7 @@
 package com.example.demo.services;
 
 import com.example.demo.models.Reservation;
+import com.example.demo.models.ReservationId;
 import com.example.demo.repository.ReservationRepository;
 import java.util.List;
 import java.util.Optional;
@@ -13,7 +14,7 @@ public class ReservationService {
     @Autowired
     private ReservationRepository reservationRepository;
 
-    public Reservation getById(Integer reservationId) {
+    public Reservation getById(ReservationId reservationId) {
         Optional<Reservation> reservation = reservationRepository.findById(reservationId);
         return reservation.orElse(null);
     }
@@ -26,7 +27,7 @@ public class ReservationService {
         return reservationRepository.save(reservation);
     }
 
-    public Reservation update(Reservation reservation, Integer reservationId) {
+    public Reservation update(Reservation reservation, ReservationId reservationId) {
         Reservation existingReservation = reservationRepository.findById(reservationId).orElse(null);
         if (existingReservation != null) {
             existingReservation.setBox(reservation.getBox());
@@ -37,7 +38,7 @@ public class ReservationService {
         return null;
     }
 
-    public void delete(Integer reservationId) {
+    public void delete(ReservationId reservationId) {
         reservationRepository.deleteById(reservationId);
     }
 }

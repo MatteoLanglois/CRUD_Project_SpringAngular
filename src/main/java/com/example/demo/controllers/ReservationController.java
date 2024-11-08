@@ -26,7 +26,7 @@ public class ReservationController {
   private ReservationMapper ReservationMapper;
 
   @GetMapping(value = "/reservation/{reservationId}")
-  public ReservationDTO getReservation(@PathVariable("reservationId") Integer reservationId) {
+  public ReservationDTO getReservation(@PathVariable("reservationId") ReservationId reservationId) {
     return ReservationMapper.toDTO(reservationService.getById(reservationId));
   }
 
@@ -49,13 +49,13 @@ public class ReservationController {
   }
 
   @PutMapping(value = "/reservation/{reservationId}")
-  public ReservationDTO updateReservation(@PathVariable("reservationId") Integer reservationId,
+  public ReservationDTO updateReservation(@PathVariable("reservationId") ReservationId reservationId,
                                           @RequestBody Reservation reservation) {
-    return ReservationMapper.toDTO(reservationService.update(reservation, reservationId));
+      return ReservationMapper.toDTO(reservationService.update(reservation, reservationId));
   }
 
   @DeleteMapping(value = "/reservation/{reservationId}")
-  public void deleteReservation(@PathVariable("reservationId") Integer reservationId) {
-    reservationService.delete(reservationId);
+  public void deleteReservation(@PathVariable("reservationId") ReservationId reservationId) {
+      reservationService.delete(reservationId);
   }
 }
