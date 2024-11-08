@@ -6,6 +6,8 @@ import com.example.demo.models.Mapper.BoxMapper;
 import com.example.demo.services.BoxService;
 import java.util.ArrayList;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -33,8 +35,12 @@ public class BoxController {
     }
 
     @PostMapping
-    public BoxDTO addBox(@RequestBody Box box) {
-        return BoxMapper.INSTANCE.toDTO(boxService.create(box));
+    public ResponseEntity<BoxDTO> addBox(@RequestBody Box box) {
+        try {
+            return ResponseEntity.ok(BoxMapper.INSTANCE.toDTO(boxService.create(box)));
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
     }
 
     @PutMapping("/{boxId}")

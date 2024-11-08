@@ -3,8 +3,11 @@ package com.example.demo.controllers;
 import com.example.demo.models.Reservation;
 import com.example.demo.models.DTO.ReservationDTO;
 import com.example.demo.models.Mapper.ReservationMapper;
+import com.example.demo.models.ReservationId;
 import com.example.demo.services.ReservationService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -29,12 +32,18 @@ public class ReservationController {
   }
 
   @PostMapping(value = "/reservation")
-  public ReservationDTO addReservation(@RequestBody Reservation reservation) {
-    return ReservationMapper.INSTANCE.toDTO(reservationService.create(reservation));
+  public ResponseEntity<ReservationDTO> addReservation(@RequestBody Reservation reservation) {
+    try {
+      return ResponseEntity.ok(ReservationMapper.INSTANCE.toDTO(reservationService.create(reservation)));
+    } catch (Exception e) {
+      return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+    }
   }
 
-  @PostMapping(value = "/reservation/{reservationId}")
-  public ReservationDTO updateReservation(@PathVariable("reservationId") Integer reservationId) {
+  @PutMapping(value = "/reservation/{reservationId}")
+  public ReservationDTO updateReservation(@PathVariable("reservationId") Integer reservationId, @RequestBody Reservation reservation) {
+    ReservationId id = new ReservationId();
+    reservation.setId(id);
     return ReservationMapper.INSTANCE.toDTO(reservationService.getById(reservationId));
   }
 

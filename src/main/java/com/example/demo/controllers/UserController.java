@@ -7,10 +7,13 @@ import com.example.demo.services.UserService;
 import java.util.ArrayList;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -35,18 +38,23 @@ public class UserController {
     }
 
     @PostMapping(value = "/user")
-    public UserDTO addUser(@RequestBody User user) {
-        return UserMapper.INSTANCE.toDTO(userService.create(user));
+    public ResponseEntity<UserDTO> addUser(@RequestBody User user) {
+        try {
+            return ResponseEntity.ok(UserMapper.INSTANCE.toDTO(userService.create(user)));
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
     }
 
-
-    @PostMapping(value = "/user/{userId}")
-    public UserDTO updateUser(@PathVariable("userId") Integer userId) {
-        return UserMapper.INSTANCE.toDTO(userService.getById(userId));
+    @PutMapping(value = "/user/{userId}")
+    public UserDTO updateUser(@PathVariable("userId") Integer userId, @RequestBody User user) {
+        user.setId(userId);
+        return UserMapper.INSTANCE.toDTO(userService.update(user));
     }
 
     @DeleteMapping(value = "/user/{userId}")
-    public void deleteUser(@PathVariable("userId") Integer userId) {
+    public ResponseEntity<Void> deleteUser(@PathVariable("userId") Integer userId) {
         userService.delete(userService.getById(userId));
+        return ResponseEntity.noContent().build();
     }
 }

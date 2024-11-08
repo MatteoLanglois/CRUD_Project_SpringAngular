@@ -18,10 +18,10 @@ import lombok.ToString;
 @ToString
 @EqualsAndHashCode
 public class UserDTO {
-  private Integer userId;
-  private String userNom;
-  private String userPrenom;
-  private String email;
+  private Integer id;
+  private String nom;
+  private String prenom;
+  private String mail;
   private String password;
   private String username;
 }
