@@ -1,8 +1,8 @@
 package com.example.demo.controllers;
 
-import com.example.demo.models.User;
 import com.example.demo.models.DTO.UserDTO;
 import com.example.demo.models.Mapper.UserMapper;
+import com.example.demo.models.User;
 import com.example.demo.services.UserService;
 import java.util.ArrayList;
 import java.util.List;
