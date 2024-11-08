@@ -1,5 +1,6 @@
 package com.example.demo.services;
 
+import com.example.demo.exceptions.box.BoxNotFoundException;
 import com.example.demo.models.Box;
 import com.example.demo.repository.BoxRepository;
 import java.util.List;
@@ -18,7 +19,7 @@ public class BoxService {
   }
 
   public Box getById(int id) {
-    return repository.findById(id).orElse(null);
+    return repository.findById(id).orElseThrow(BoxNotFoundException::new);
   }
 
   public List<Box> getAll() {

@@ -5,31 +5,34 @@ import jakarta.persistence.Embeddable;
 import lombok.EqualsAndHashCode;
 
 /**
- * Classe représentant l'identifiant composé d'une réservation dans la base de données.
- * Cette classe est utilisée comme clé primaire composée pour l'entité {@link Reservation}.
- * Elle combine les identifiants d'un utilisateur et d'une boîte pour créer une clé unique.
+ * Représente un identifiant composite pour une réservation, utilisé pour lier un utilisateur et une boîte dans une réservation.
  *
- * <p>Annotations principales :
- * <ul>
- *     <li>{@link Embeddable} : Indique que cette classe peut être intégrée dans une autre entité en tant que clé composée.</li>
- *     <li>{@link Column} : Définit les noms des colonnes correspondantes dans la base de données.</li>
- *     <li>{@link EqualsAndHashCode} : Génère les méthodes equals() et hashCode() pour comparer les instances de cette classe correctement en fonction de leurs valeurs.</li>
- * </ul>
+ * Cette classe contient deux champs : l'ID de l'utilisateur (`id_user`) et l'ID de la boîte (`id_box`), qui sont utilisés ensemble
+ * comme clé primaire composée dans l'entité `Reservation`.
+ *
+ * Cette classe est marquée avec l'annotation `@Embeddable`, ce qui signifie qu'elle peut être incluse comme un identifiant composite
+ * dans une autre entité.
+ *
+ * @see Reservation
  */
 @Embeddable
 @EqualsAndHashCode
 public class ReservationId {
 
   /**
-   * Identifiant de l'utilisateur dans la réservation.
-   * Ce champ fait partie de la clé primaire composée.
+   * L'ID de l'utilisateur associé à la réservation.
+   *
+   * Ce champ représente l'identifiant unique de l'utilisateur qui effectue la réservation.
+   * Il est marqué comme non nul avec `nullable = false` pour garantir que l'ID de l'utilisateur est toujours renseigné.
    */
   @Column(name = "id_user", nullable = false)
   private int id_user;
 
   /**
-   * Identifiant de la boîte dans la réservation.
-   * Ce champ fait également partie de la clé primaire composée.
+   * L'ID de la boîte associée à la réservation.
+   *
+   * Ce champ représente l'identifiant unique de la boîte réservée.
+   * Il est marqué comme non nul avec `nullable = false` pour garantir que l'ID de la boîte est toujours renseigné.
    */
   @Column(name = "id_box", nullable = false)
   private int id_box;

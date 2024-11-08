@@ -16,25 +16,16 @@ import lombok.Setter;
 import lombok.ToString;
 
 /**
- * Classe représentant une réservation dans la base de données.
- * Elle est mappée sur la table "reservation" et utilise une clé composée pour la relation entre {@link User} et {@link Box}.
+ * Représente une réservation d'un utilisateur pour une boîte spécifiée.
  *
- * <p>Annotations principales :
- * <ul>
- *     <li>{@link Entity} : Indique que cette classe est une entité JPA.</li>
- *     <li>{@link Table} : Définit la table associée à cette entité, nommée "reservation".</li>
- *     <li>{@link EmbeddedId} : Utilise une clé composée pour identifier de manière unique chaque instance de réservation.</li>
- *     <li>{@link ManyToOne} : Spécifie la relation plusieurs-à-un avec les entités {@link User} et {@link Box}.</li>
- *     <li>{@link MapsId} : Utilisée pour associer les clés étrangères des entités {@link User} et {@link Box} dans la clé composée {@link ReservationId}.</li>
- * </ul>
+ * La classe `Reservation` contient un identifiant composite, la relation avec l'utilisateur (`User`) et la boîte (`Box`) correspondante,
+ * ainsi que le statut ou le nombre de réservations associées.
  *
- * <p>Généré par Lombok :
- * <ul>
- *     <li>{@link Getter} et {@link Setter} : Fournissent automatiquement les accesseurs et mutateurs pour chaque champ.</li>
- *     <li>{@link ToString} : Génère une méthode toString() pour un affichage facile de l'objet.</li>
- *     <li>{@link Builder} : Permet la construction d'une instance de {@code Reservation} via un pattern de type Builder.</li>
- *     <li>{@link AllArgsConstructor} et {@link NoArgsConstructor} : Fournissent des constructeurs pour cette classe.</li>
- * </ul>
+ * Cette entité est mappée à la table "reservation" dans la base de données.
+ *
+ * @see ReservationId
+ * @see User
+ * @see Box
  */
 @Entity
 @Builder
@@ -47,33 +38,39 @@ import lombok.ToString;
 public class Reservation {
 
   /**
-   * Clé composée de la réservation, utilisant l'embedded id {@link ReservationId}.
-   * Elle identifie de manière unique chaque réservation par l'association des clés étrangères.
+   * Identifiant composite de la réservation. Utilisé pour lier cette entité avec l'utilisateur et la boîte.
+   *
+   * Ce champ est défini avec l'annotation `@EmbeddedId`, qui permet de l'utiliser comme clé primaire composée.
    */
   @EmbeddedId
   private ReservationId id;
 
   /**
-   * Utilisateur associé à la réservation.
-   * Obligatoire et mappé sur la clé composée par {@link MapsId} et {@link JoinColumn}.
+   * Relation Many-to-One entre la réservation et l'utilisateur.
+   *
+   * Utilise l'annotation `@ManyToOne` pour définir une relation avec l'entité `User`.
+   * La clé étrangère est mappée sur la colonne `utilisateur_id`.
    */
-  @ManyToOne(optional = false)
-  @MapsId("id_user")
-  @JoinColumn(name = "id_user_id", nullable = false)
+  @ManyToOne
+  @MapsId("user")
+  @JoinColumn(name = "utilisateur_id")
   private User user;
 
   /**
-   * Boîte associée à la réservation.
-   * Obligatoire et mappée sur la clé composée par {@link MapsId} et {@link JoinColumn}.
+   * Relation Many-to-One entre la réservation et la boîte.
+   *
+   * Utilise l'annotation `@ManyToOne` pour définir une relation avec l'entité `Box`.
+   * La clé étrangère est mappée sur la colonne `boite_id`.
    */
-  @ManyToOne(optional = false)
-  @MapsId("id_box")
-  @JoinColumn(name = "id_box_id", nullable = false)
+  @ManyToOne
+  @MapsId("box")
+  @JoinColumn(name = "boite_id")
   private Box box;
 
   /**
-   * Quantité réservée dans la boîte.
-   * Ce champ est obligatoire et ne peut pas être nul.
+   * Le nombre de réservations effectuées. Ce champ est requis et ne peut pas être nul.
+   *
+   * Cette valeur représente une information supplémentaire sur la réservation.
    */
   @NonNull
   private Integer reservation;

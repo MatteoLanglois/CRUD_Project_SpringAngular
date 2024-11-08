@@ -22,7 +22,7 @@ public class UserController {
     @Autowired
     private UserService userService;
 
-    @GetMapping(value = "/user/{userId}")
+    @GetMapping(value = "/users/{userId}")
     public UserDTO getUser(@PathVariable("userId") Integer userId) {
         return UserMapper.INSTANCE.toDTO(userService.getById(userId));
     }
@@ -37,7 +37,7 @@ public class UserController {
         return usersDTO;
     }
 
-    @PostMapping(value = "/user")
+    @PostMapping(value = "/users")
     public ResponseEntity<UserDTO> addUser(@RequestBody User user) {
         try {
             return ResponseEntity.ok(UserMapper.INSTANCE.toDTO(userService.create(user)));
@@ -46,13 +46,13 @@ public class UserController {
         }
     }
 
-    @PutMapping(value = "/user/{userId}")
+    @PutMapping(value = "/users/{userId}")
     public UserDTO updateUser(@PathVariable("userId") Integer userId, @RequestBody User user) {
         user.setId(userId);
         return UserMapper.INSTANCE.toDTO(userService.update(user, userId));
     }
 
-    @DeleteMapping(value = "/user/{userId}")
+    @DeleteMapping(value = "/users/{userId}")
     public ResponseEntity<Void> deleteUser(@PathVariable("userId") Integer userId) {
         userService.delete(userService.getById(userId));
         return ResponseEntity.noContent().build();
