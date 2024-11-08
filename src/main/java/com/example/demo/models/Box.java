@@ -21,7 +21,7 @@ import lombok.ToString;
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 @NoArgsConstructor
 @ToString
-@Table(name = "box")
+@Table(name = "boite")
 public class Box {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
