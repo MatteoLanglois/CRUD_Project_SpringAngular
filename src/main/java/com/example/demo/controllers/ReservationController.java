@@ -46,10 +46,9 @@ public class ReservationController {
   }
 
   @PutMapping(value = "/reservation/{reservationId}")
-  public ReservationDTO updateReservation(@PathVariable("reservationId") Integer reservationId, @RequestBody Reservation reservation) {
-    ReservationId id = new ReservationId();
-    reservation.setId(id);
-    return ReservationMapper.INSTANCE.toDTO(reservationService.getById(reservationId));
+  public ReservationDTO updateReservation(@PathVariable("reservationId") Integer reservationId,
+                                          @RequestBody Reservation reservation) {
+    return ReservationMapper.INSTANCE.toDTO(reservationService.update(reservation, reservationId));
   }
 
   @DeleteMapping(value = "/reservation/{reservationId}")

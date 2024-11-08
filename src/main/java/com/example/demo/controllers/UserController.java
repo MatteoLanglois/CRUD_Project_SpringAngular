@@ -49,7 +49,7 @@ public class UserController {
     @PutMapping(value = "/user/{userId}")
     public UserDTO updateUser(@PathVariable("userId") Integer userId, @RequestBody User user) {
         user.setId(userId);
-        return UserMapper.INSTANCE.toDTO(userService.update(user));
+        return UserMapper.INSTANCE.toDTO(userService.update(user, userId));
     }
 
     @DeleteMapping(value = "/user/{userId}")

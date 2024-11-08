@@ -23,8 +23,8 @@ public class UserService {
       return userRepository.save(user);
     }
 
-    public User update(User user) {
-        User existingUser = userRepository.findById(user.getId()).orElse(null);
+    public User update(User user, int id) {
+        User existingUser = userRepository.findById(id).orElse(null);
         if (existingUser != null) {
             existingUser.setNom(user.getNom());
             existingUser.setPrenom(user.getPrenom());
