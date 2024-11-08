@@ -30,13 +30,13 @@ public class Reservation {
   @ManyToOne(optional = false)
   @MapsId("id_user")
   @JoinColumn(name = "id_user_id", nullable = false)
-  private User id_user;
+  private User user;
 
   @ManyToOne(optional = false)
   @MapsId("id_box")
   @JoinColumn(name = "id_box_id", nullable = false)
-  private Box id_box;
+  private Box box;
 
   @NonNull
-  private int reservation;
+  private Integer reservation;
 }

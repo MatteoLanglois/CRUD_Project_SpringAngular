@@ -10,18 +10,8 @@ import org.mapstruct.factory.Mappers;
 public interface BoxMapper {
   BoxMapper INSTANCE = Mappers.getMapper(BoxMapper.class);
 
-  @Mapping(source = "id", target = "id")
-  @Mapping(source = "nom", target = "nom")
-  @Mapping(source = "quantite", target = "quantite")
-  @Mapping(source = "description", target = "description")
-  @Mapping(source = "point_geo", target = "point_geo")
   BoxDTO toDTO(Box box);
 
-  @Mapping(source = "id", target = "id")
-  @Mapping(source = "nom", target = "nom")
-  @Mapping(source = "quantite", target = "quantite")
-  @Mapping(source = "description", target = "description")
-  @Mapping(source = "point_geo", target = "point_geo")
   Box toEntity(BoxDTO boxDTO);
 
 }

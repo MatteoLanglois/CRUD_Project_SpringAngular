@@ -22,16 +22,19 @@ public class ReservationController {
   @Autowired
   private ReservationService reservationService;
 
+  @Autowired
+  private ReservationMapper ReservationMapper;
+
   @GetMapping(value = "/reservation/{reservationId}")
   public ReservationDTO getReservation(@PathVariable("reservationId") Integer reservationId) {
-    return ReservationMapper.INSTANCE.toDTO(reservationService.getById(reservationId));
+    return ReservationMapper.toDTO(reservationService.getById(reservationId));
   }
 
   @GetMapping(value = "/reservations")
   public ArrayList<ReservationDTO> getAll() {
     ArrayList<ReservationDTO> reservationsDTO = new ArrayList<>();
     for (Reservation reservation : reservationService.getAll()) {
-      reservationsDTO.add(ReservationMapper.INSTANCE.toDTO(reservation));
+      reservationsDTO.add(ReservationMapper.toDTO(reservation));
     }
     return reservationsDTO;
   }
@@ -39,7 +42,7 @@ public class ReservationController {
   @PostMapping(value = "/reservation")
   public ResponseEntity<ReservationDTO> addReservation(@RequestBody Reservation reservation) {
     try {
-      return ResponseEntity.ok(ReservationMapper.INSTANCE.toDTO(reservationService.create(reservation)));
+      return ResponseEntity.ok(ReservationMapper.toDTO(reservationService.create(reservation)));
     } catch (Exception e) {
       return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
     }
@@ -48,7 +51,7 @@ public class ReservationController {
   @PutMapping(value = "/reservation/{reservationId}")
   public ReservationDTO updateReservation(@PathVariable("reservationId") Integer reservationId,
                                           @RequestBody Reservation reservation) {
-    return ReservationMapper.INSTANCE.toDTO(reservationService.update(reservation, reservationId));
+    return ReservationMapper.toDTO(reservationService.update(reservation, reservationId));
   }
 
   @DeleteMapping(value = "/reservation/{reservationId}")
