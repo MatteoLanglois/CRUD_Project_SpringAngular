@@ -27,15 +27,16 @@ public class Reservation {
   @EmbeddedId
   private ReservationId id;
 
-  @ManyToOne(optional = false)
-  @MapsId("id_user")
-  @JoinColumn(name = "id_user_id", nullable = false)
+  @ManyToOne
+  @MapsId("user")
+  @JoinColumn(name = "utilisateur_id")
   private User user;
 
-  @ManyToOne(optional = false)
-  @MapsId("id_box")
-  @JoinColumn(name = "id_box_id", nullable = false)
+  @ManyToOne
+  @MapsId("box")
+  @JoinColumn(name = "boite_id")
   private Box box;
+
 
   @NonNull
   private Integer reservation;

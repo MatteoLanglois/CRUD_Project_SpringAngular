@@ -29,12 +29,6 @@ public class ReservationService {
 
     public Reservation update(Reservation reservation, ReservationId reservationId) {
         Reservation existingReservation = reservationRepository.findById(reservationId).orElse(null);
-        if (existingReservation != null) {
-            existingReservation.setBox(reservation.getBox());
-            existingReservation.setUser(reservation.getUser());
-            existingReservation.setReservation(reservation.getReservation());
-            return reservationRepository.save(existingReservation);
-        }
         return null;
     }
 
