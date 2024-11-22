@@ -1,5 +1,6 @@
 package com.example.demo.config;
 
+import lombok.NonNull;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
@@ -12,9 +13,9 @@ public class CorsConfig {
     public WebMvcConfigurer corsConfigurer() {
         return new WebMvcConfigurer() {
             @Override
-            public void addCorsMappings(CorsRegistry registry) {
+            public void addCorsMappings(@NonNull CorsRegistry registry) {
                 // Autoriser le frontend Angular qui tourne sur localhost:4200
-                registry.addMapping("/api/**")  // Applique uniquement sur les routes API
+                registry.addMapping("/**")  // Applique uniquement sur les routes API
                         .allowedOrigins("http://localhost:4200")  // Frontend Angular
                         .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")  // Méthodes HTTP autorisées
                         .allowedHeaders("*")  // En-têtes autorisés
