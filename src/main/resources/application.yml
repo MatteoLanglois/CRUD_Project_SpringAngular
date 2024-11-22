@@ -2,9 +2,9 @@ spring:
   application:
     name: opendata-crud
   datasource:
-    url: jdbc:mariadb://localhost:3306/polytech
-    username: bal
-    password: YmVFwKjXLZdMfC7WJB2Dys
+    url: jdbc:mariadb://localhost:3307/polytech
+    username: root
+    password: password
     driver-class-name: org.mariadb.jdbc.Driver
   jpa:
     properties:

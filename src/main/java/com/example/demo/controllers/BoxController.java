@@ -6,6 +6,8 @@ import com.example.demo.models.Mapper.BoxMapper;
 import com.example.demo.services.BoxService;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -31,13 +33,11 @@ public class BoxController {
 
     @GetMapping("/boxes")
     public List<BoxDTO> getAll() {
-      List<Box> boxes = boxService.getAll();
-      ArrayList<BoxDTO> boxesDTO = new ArrayList<>();
-      for (Box box : boxes) {
-          boxesDTO.add(BoxMapper.INSTANCE.toDTO(box));
-      }
-      return boxesDTO;
+        return boxService.getAll().stream()
+                .map(BoxMapper.INSTANCE::toDTO)
+                .collect(Collectors.toList());
     }
+
 
     @PostMapping("/boxes")
     public ResponseEntity<BoxDTO> addBox(@RequestBody Box box) {
