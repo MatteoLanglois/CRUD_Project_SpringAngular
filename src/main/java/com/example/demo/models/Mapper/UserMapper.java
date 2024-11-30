@@ -3,6 +3,7 @@ package com.example.demo.models.Mapper;
 import com.example.demo.models.DTO.UserDTO;
 import com.example.demo.models.User;
 import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
 import org.mapstruct.factory.Mappers;
 
 /**
@@ -34,6 +35,7 @@ public interface UserMapper {
    * @param user l'entité {@link User} à convertir
    * @return un objet {@link UserDTO} contenant les données de l'entité
    */
+  @Mapping(target = "password", ignore = true)
   UserDTO toDTO(User user);
 
   /**
@@ -44,4 +46,3 @@ public interface UserMapper {
    */
   User toEntity(UserDTO userDTO);
 }
-

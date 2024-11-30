@@ -13,6 +13,7 @@ import lombok.NoArgsConstructor;
 import lombok.NonNull;
 import lombok.Setter;
 import lombok.ToString;
+import org.checkerframework.common.aliasing.qual.Unique;
 
 @Entity
 @Builder
@@ -40,5 +41,6 @@ public class User {
   private String password;
 
   @NonNull
+  @Unique
   private String username;
 }

@@ -1,11 +1,14 @@
 package com.example.demo.controllers;
 
 import com.example.demo.models.DTO.UserDTO;
+import com.example.demo.models.LoginData;
 import com.example.demo.models.Mapper.UserMapper;
 import com.example.demo.models.User;
+import com.example.demo.repository.UserRepository;
 import com.example.demo.services.UserService;
 import java.util.ArrayList;
 import java.util.List;
+import org.apache.catalina.Authenticator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,8 +18,13 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetailsService;
+
 
 @RestController
 public class UserController {
@@ -58,4 +66,20 @@ public class UserController {
         userService.delete(userService.getById(userId));
         return ResponseEntity.noContent().build();
     }
+
+@PostMapping("/login")
+public ResponseEntity<String> login(@RequestBody LoginData loginData) {
+    try {
+        if (loginData.getUsername() == null || loginData.getPassword() == null) {
+            throw new Exception("Please provide username and password");
+        } else if (loginData.getPassword().equals(userService.getByUsername(loginData.getUsername()).getPassword())) {
+            Integer loginId = userService.getByUsername(loginData.getUsername()).getId();
+            return ResponseEntity.status(HttpStatus.ACCEPTED).body(loginId.toString());
+        } else {
+            throw new Exception("Invalid credentials");
+        }
+    } catch (Exception e) {
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(e.getMessage());
+    }
+}
 }
