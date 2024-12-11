@@ -52,4 +52,31 @@ public class ReservationDTO {
    * effectuées pour cette boîte.
    */
   private int reservation;
+
+
+  public Integer getUserId() {
+    return id_user;
+  }
+
+  public void setUserId(Integer userId) {
+    this.id_user = userId;
+  }
+
+  public Integer getBoxId() {
+    return id_box;
+  }
+
+  public void setBoxId(Integer boxId) {
+    this.id_box = boxId;
+  }
+
+  public Integer getReservation() {
+    return reservation;
+  }
+
+  public void setReservation(Integer reservation) {
+    this.reservation = reservation;
+  }
+
+
 }
