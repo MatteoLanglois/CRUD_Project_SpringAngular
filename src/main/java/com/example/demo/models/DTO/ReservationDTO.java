@@ -51,5 +51,32 @@ public class ReservationDTO {
    * Ce champ représente le statut de la réservation, qui pourrait être un indicateur numérique, par exemple, du nombre de réservations
    * effectuées pour cette boîte.
    */
-  private Integer reservation;
+  private int reservation;
+
+
+  public Integer getUserId() {
+    return id_user;
+  }
+
+  public void setUserId(Integer userId) {
+    this.id_user = userId;
+  }
+
+  public Integer getBoxId() {
+    return id_box;
+  }
+
+  public void setBoxId(Integer boxId) {
+    this.id_box = boxId;
+  }
+
+  public Integer getReservation() {
+    return reservation;
+  }
+
+  public void setReservation(Integer reservation) {
+    this.reservation = reservation;
+  }
+
+
 }

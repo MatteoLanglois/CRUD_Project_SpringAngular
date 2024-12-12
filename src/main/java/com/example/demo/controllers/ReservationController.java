@@ -51,13 +51,27 @@ public class ReservationController {
   }
 
   @PostMapping(value = "/reservations")
-  public ResponseEntity<ReservationDTO> addReservation(@RequestBody Reservation reservation) {
+  public ResponseEntity<ReservationDTO> addReservation(@RequestBody ReservationDTO reservationDTO) {
     try {
-      return ResponseEntity.ok(reservationMapper.toDTO(reservationService.create(reservation)));
+      if (reservationDTO.getUserId() == null || reservationDTO.getBoxId() == null) {
+        return ResponseEntity.badRequest().body(null);
+      }
+      User user = userService.getById(reservationDTO.getUserId());
+      Box box = boxService.getById(reservationDTO.getBoxId());
+
+      if (user == null || box == null) {
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+      }
+      Reservation reservation = Reservation.builder().id(new ReservationId(user, box)).user(user).box(box).reservation(reservationDTO.getReservation()).build();
+      Reservation savedReservation = reservationService.create(reservation);
+      ReservationDTO savedReservationDTO = reservationMapper.toDTO(savedReservation);
+      return ResponseEntity.ok(savedReservationDTO);
     } catch (Exception e) {
+      e.printStackTrace();
       return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
     }
   }
+
 
   @PutMapping(value = "/reservations/boxes/{boxId}/users/{userId}")
   public ReservationDTO updateReservation(@PathVariable("boxId") Integer boxId,
