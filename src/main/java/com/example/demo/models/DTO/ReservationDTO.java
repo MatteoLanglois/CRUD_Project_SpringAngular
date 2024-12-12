@@ -51,5 +51,5 @@ public class ReservationDTO {
    * Ce champ représente le statut de la réservation, qui pourrait être un indicateur numérique, par exemple, du nombre de réservations
    * effectuées pour cette boîte.
    */
-  private int reservation;
+  private Integer reservation;
 }
