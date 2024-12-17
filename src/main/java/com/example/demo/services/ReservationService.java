@@ -29,11 +29,18 @@ public class ReservationService {
     }
 
     public Reservation update(Reservation reservation, ReservationId reservationId) {
-        Reservation existingReservation = reservationRepository.findById(reservationId).orElse(null);
-        return null;
+        Reservation existingReservation = reservationRepository.findById(reservationId).orElseThrow(ReservationNotFoundException::new);
+        existingReservation.setReservation(reservation.getReservation());
+        existingReservation.setBox(reservation.getBox());
+        existingReservation.setUser(reservation.getUser());
+        return reservationRepository.save(existingReservation);
     }
 
     public void delete(ReservationId reservationId) {
         reservationRepository.deleteById(reservationId);
+    }
+
+    public int getTotalReservationByBoxId(Integer boxId) {
+        return Optional.ofNullable(reservationRepository.findTotalReservationByBoxId(boxId)).orElse(0);
     }
 }

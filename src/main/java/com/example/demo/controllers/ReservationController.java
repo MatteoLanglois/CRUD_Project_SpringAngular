@@ -65,16 +65,7 @@ public class ReservationController {
       }
 
       // Check if there is enough space in the box
-      ArrayList<ReservationDTO> reservationsDTO = new ArrayList<>();
-      for (Reservation reservation : reservationService.getAll()) {
-        reservationsDTO.add(reservationMapper.toDTO(reservation));
-      }
-      int totalReservation = 0;
-      for (ReservationDTO reservation : reservationsDTO) {
-        if (Objects.equals(reservation.getBoxId(), reservationDTO.getBoxId())) {
-          totalReservation += reservation.getReservation();
-        }
-      }
+      int totalReservation = reservationService.getTotalReservationByBoxId(reservationDTO.getBoxId());
       if (totalReservation + reservationDTO.getReservation() > box.getQuantite()) {
         throw new ReservationNotAvailable("");
       }
@@ -97,13 +88,20 @@ public class ReservationController {
   @PutMapping(value = "/reservations/boxes/{boxId}/users/{userId}")
   public ResponseEntity<ReservationDTO> updateReservation(@PathVariable("boxId") Integer boxId,
                                                           @PathVariable("userId") Integer userId,
-                                                          @RequestBody Reservation reservation) {
+                                                          @RequestBody ReservationDTO reservationDTO) {
     Box box = boxService.getById(boxId);
     User user = userService.getById(userId);
 
     if (box == null || user == null) {
       return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
     }
+
+    Reservation reservation = Reservation.builder()
+        .id(new ReservationId(user, box))
+        .user(user)
+        .box(box)
+        .reservation(reservationDTO.getReservation())
+        .build();
 
     return ResponseEntity.ok(reservationMapper.toDTO(reservationService.update(reservation, new ReservationId(user, box))));
   }
