@@ -1,10 +1,6 @@
 package com.example.demo.models;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -14,6 +10,8 @@ import lombok.NonNull;
 import lombok.Setter;
 import lombok.ToString;
 import org.checkerframework.common.aliasing.qual.Unique;
+
+import java.util.List;
 
 @Entity
 @Builder
@@ -43,4 +41,8 @@ public class User {
   @NonNull
   @Unique
   private String username;
+
+  @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+  private List<Reservation> reservations;
+
 }
